@@ -3,3 +3,24 @@ task helloWorld {
       println 'Hello world!'
    }
 }
+
+task startSession{
+  chant()
+}
+
+def chant(){
+  println ' Repeat After me'
+}
+
+3.times {
+  task "yayGradle$it"{
+    //println  $it
+    doLast {
+    println ' Gradle Rocks'
+    }
+  }
+}
+
+yayGradle0.dependsOn startSession
+yayGradle2.dependsOn yayGradle1, yayGradle0
+task groupTherapy(dependsOn: yayGradle2)
