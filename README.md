@@ -107,7 +107,7 @@ Gradle Build Language Reference Guide - http://www.gradle.org/docs/current/dsl/i
 - Using the wrapper is considered best practice and should be mandatory for every Gradle project. Gradle scripts backed by the wrapper are perfectly prepared to run as part of automated release processes like continuous integration and delivery.
 
 
-## Gradle Hands-On
+## Chapter 3 : Build a Project by Example
 
 ## Upgrading Gradle
 
@@ -174,3 +174,41 @@ jar {
     }
 }
 ```
+
+## 4. Build script essentials
+
+- Every Gradle build consists of three basic building blocks: projects, tasks, and properties.
+- Each build contains at least one project, which in turn contains one or more tasks.
+  - Project and Tasks have a direct class representation in Gradle’s API
+
+### Projects
+- In Gradle’s terminology a project represents a component you’re trying to build (for example, a JAR file), or a goal you’re trying to achieve, like **deploying an application**.
+- When starting the build process, Gradle instantiates the class org.gradle.api.Project based on your configuration in build.gradle and makes it implicitly available through the **project variable**.
+
+```
+def name = getName() // gets access to the project instance and calls the name of the project.
+println name
+```
+- Keep in mind that you’re not required to use the project variable when accessing properties and methods of your project—it’s assumed you mean the Project instance.
+
+#### Extra properties
+
+ -  To add properties, you’re required to use the ext namespace.
+
+ **Approach 1**
+```
+project.ext.prop = 123
+```
+**Approach 2**
+ ```
+ ext {
+   someOtherprop = 'Hello'
+ }
+ ```
+
+ - Access and print them using the below syntax.
+
+ ```
+ println ext.prop
+println ext.someOtherprop
+ ```

@@ -4,10 +4,22 @@ plugins {
 }
 */
 
+project.ext.prop = 123
+
+ext {
+    someOtherprop = 'Hello'
+}
+
+println ext.prop
+println ext.someOtherprop
+
+
 apply plugin: 'java'
 
 //apply plugin: 'application'
 
+def name = getName() // gets access to the project instance and calls the name of the project.
+println name
 
 group 'com.learngradle'
 version '1.0-SNAPSHOT'
@@ -29,9 +41,11 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+/*
+
 task wrapper(type: Wrapper){
-    println 'Inside wrapper!'
     doLast {
         println 'Inside wrapper!'
+
     }
-}
+}*/
