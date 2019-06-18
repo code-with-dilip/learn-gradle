@@ -103,8 +103,21 @@ Gradle Build Language Reference Guide - http://www.gradle.org/docs/current/dsl/i
 - Gradle Wrapper to the rescue! It allows for downloading and installing a fresh copy of the Gradle runtime from a specified repository on any machine you run the build on.
 - This process is automatically triggered on the first execution of the build.
 
+**When to use the wrapper**  
+- Using the wrapper is considered best practice and should be mandatory for every Gradle project. Gradle scripts backed by the wrapper are perfectly prepared to run as part of automated release processes like continuous integration and delivery.
+
 
 ## Gradle Hands-On
+
+## Upgrading Gradle
+
+- The below command will upgrade grale.
+
+```
+./gradlew wrapper --gradle-version=5.4.1
+```
+
+
 
 ### Executing a task in Gradle
 - Create a file named **build.gradle**
@@ -125,4 +138,41 @@ gradle -q helloWorld
 **option2**  
 ```
 gradle -q hW
+```
+
+### dependsOn
+
+- DependsOn makes sure that the task that it depends on gets executed before the actual task.
+
+```
+yayGradle0.dependsOn startSession
+```
+
+## Plugin
+
+### Java
+
+**Approach 1**
+
+```plugins {
+    id 'java'
+}
+```
+
+**Approach 2**
+
+```
+apply plugin: 'java'
+```
+- One of the task the Java plugin adds to the project is the **build** task.
+
+#### jar
+
+- By definiing the jar task like below we are overriding the default behavior of gradle.
+```
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.learngradle.ToDoApp'
+    }
+}
 ```
