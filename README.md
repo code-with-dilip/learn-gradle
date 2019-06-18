@@ -117,8 +117,6 @@ Gradle Build Language Reference Guide - http://www.gradle.org/docs/current/dsl/i
 ./gradlew wrapper --gradle-version=5.4.1
 ```
 
-
-
 ### Executing a task in Gradle
 - Create a file named **build.gradle**
 
