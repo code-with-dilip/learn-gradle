@@ -232,7 +232,7 @@ println ext.someOtherprop
     ORG_GRADLE_PROJECT_foo=bar
   ```
 
-#### WORKING WITH TASKS  
+### WORKING WITH TASKS  
 - By default, every newly created task is of type org.gradle.api.DefaultTask, the standard implementation of org.gradle.api.Task.
 - All fields in class DefaultTask are marked private.
 - Task has two methods in it.
