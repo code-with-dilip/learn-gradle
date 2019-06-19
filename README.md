@@ -193,7 +193,7 @@ println name
 
 #### Extra properties
 
- -  To add properties, you’re required to use the ext namespace.
+ -  To add properties, you’re required to use the **ext** namespace.
 
  **Approach 1**
 ```
@@ -209,6 +209,130 @@ project.ext.prop = 123
  - Access and print them using the below syntax.
 
  ```
- println ext.prop
+println ext.prop
 println ext.someOtherprop
  ```
+
+- You can also add properties by adding the **gradle.properties** to the root path.
+
+- There are other ways to declare new properties.
+  - Project property via the –P command-line option
+    ```
+    build -Pmessage=HelloFromCommandLine
+    ```
+  - System property via the –D command-line option
+    ```
+    build -Dmessage=HelloFromCommandLine
+    ```
+  - Setting a Project property using an environment variable.
+  ```
+  Setting a project property via a system property
+    org.gradle.project.foo=bar
+  Setting a project property via an environment variable
+    ORG_GRADLE_PROJECT_foo=bar
+  ```
+
+#### WORKING WITH TASKS  
+- By default, every newly created task is of type org.gradle.api.DefaultTask, the standard implementation of org.gradle.api.Task.
+- All fields in class DefaultTask are marked private.
+- Task has two methods in it.
+  - doFirst
+  - doLast
+- Example of a customTask  
+```
+task printVersion{
+    doFirst {
+        println "doFirst of printVersion"
+        doMiddle("$version")
+    }
+
+    doLast {
+        println "version is $version"
+    }
+}
+def doMiddle(version) {
+    println "doMiddle of printVersion $version"
+}
+```  
+- **group** and **description**. Both act as part of the task documentation.
+
+```
+task printVersion(group: 'versioning', description: 'Prints Version of the project.'){
+    doFirst {
+        println "doFirst of printVersion"
+        doMiddle("$version")
+    }
+
+    doLast {
+        println "version is $version"
+    }
+}
+```
+-  By running **gradle tasks** you will be group information displayed in the console like below.
+
+```
+Versioning tasks
+----------------
+printVersion - Prints Version of the project.
+
+```
+
+##### dependsOn
+
+- The **dependsOn** can be done in two different ways.
+  - By Passing the **dependsOn** to a task method.
+  - By specifying the **dependsOn** after the **dot** operator.
+```
+task first {
+  doLast {
+  println 'first'
+  }
+}
+
+task second {
+  doLast {
+  println 'second'
+  }
+}
+
+task third(dependsOn: [first,second]){
+  doLast {
+  println 'third'
+  }
+}
+
+task four {
+  doLast {
+  println 'four'
+  }
+}
+
+four.dependsOn third
+```
+
+#### finalizedBy
+
+- You may find yourself in situations that require a certain resource to be cleaned up after a task that depends on it is
+ executed.
+
+```
+task first {
+  doLast {
+  println 'first'
+  }
+}
+
+task second {
+  doLast {
+  println 'second'
+  }
+}
+
+first.finalizedBy second
+```
+
+- Executing the gradle task using the below command.
+
+```
+gradle -q first
+```
