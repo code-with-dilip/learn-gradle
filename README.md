@@ -336,3 +336,126 @@ first.finalizedBy second
 ```
 gradle -q first
 ```
+
+#### Add a class to build.gradle
+
+- You have the flexibility to add class files to the **build.gradle** file which will allow you to customize the code logic.
+- Check this in the **todo-app** project.
+
+```
+version = new ProjectVersion(0,2,true)
+
+class ProjectVersion{
+    Integer minor
+    Integer major
+    Boolean releaseFlag
+
+    ProjectVersion(Integer minor, Integer major, Boolean releaseFlag) {
+        this.minor = minor
+        this.major = major
+        this.releaseFlag = releaseFlag
+    }
+
+    ProjectVersion(Integer minor, Integer major) {
+        this.minor = minor
+        this.major = major
+    }
+
+    @Override
+    String toString() {
+        return "$major.$minor${releaseFlag ? '' : '-SNAPSHOT'}"
+    }
+}
+```
+
+-  Now its time to externalize the version properties.
+
+```
+ext.versionFile = file('version.properties')
+task loadVersion {
+    project.version=readVersion() // This is a configuration. So this gets executed even though the task is not specifically invoked.
+    println "Version is $project.version"
+
+}
+
+ProjectVersion readVersion() {
+
+    logger.quiet('Inside readVersion')
+
+    Properties versionProps = new Properties()
+    versionFile.withInputStream {
+        stream -> versionProps.load(stream)
+    }
+
+    new ProjectVersion(versionProps.major.toInteger(), versionProps.minor.toInteger()
+                 ,versionProps.release.toBoolean())
+}
+```
+
+#### Gradle’s build lifecycle phases
+There are three different phases for a **gradle** lifecycle
+  - Intialization
+    - Gradle creates a Project instance for your project.
+  - build phase
+    - This is only applicable for multiproject builds.
+  - Configuration
+    - Gradle constructs a model representation of the tasks that will take part in the build.
+    - Any configuration code is executed with every build of your project—even if you just execute gradle tasks.
+    - The incremental build feature determines if any of the tasks in the model are required to be run.
+  - Execution
+    - In the execution phase tasks are executed in the correct order. The execution order is determined by their dependencies.
+
+#### Declaring task inputs and outputs
+- Gradle determines if a task is up to date by comparing a snapshot of a task’s inputs and outputs between two builds.
+- Remember, task inputs and outputs are evaluated during the configuration phase to wire up the task dependencies. That’s why they need to be defined in a configuration block.
+- The task gets executed when either the inputs or output change.
+  - When there is no change to the input/output you will get below.
+    ```
+    1 actionable task: 1 up-to-date
+    ```
+  - When there is a change to the input/output you will get below.
+    ```
+    1 actionable task: 1 executed
+    ```      
+
+```
+task releaseVersion {
+    inputs.property('releaseFlag', version.releaseFlag) //you have the option to set the input value to the task
+    outputs.file versionFile
+    doLast {
+        version.releaseFlag = true
+        ant.propertyfile(file: versionFile) {
+            entry(key: 'releaseFlag', type: 'string', operation: '=', value: 'true')
+        }
+    }
+}
+```
+#### Writing a Custom Task
+
+- The same thing above can be expressed like above.
+- The input and output can be expressed using the **@Input** and **@OutputFile** annotations.
+- The gradle configuration keeps track of changes whether to run the build or not using the input and outputs.
+
+```
+// Creating a custom task
+
+class ReleaseVersionTask extends DefaultTask {
+
+    @Input Boolean releaseFlag
+    @OutputFile File destFile
+
+    @TaskAction
+    void start(){
+        project.version.releaseFlag = true
+        ant.propertyfile(file: destFile) {
+            entry(key: 'releaseFlag', type: 'string', operation: '=', value: 'false')
+        }
+    }
+}
+
+task releaseVersion1(type: ReleaseVersionTask) {
+    releaseFlag = version.releaseFlag
+    destFile = versionFile
+}
+
+```

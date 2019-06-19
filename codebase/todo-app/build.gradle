@@ -10,6 +10,8 @@ ext {
     someOtherprop = 'Hello'
 }
 
+
+
 println ext.prop
 println ext.someOtherprop
 println maintainerName
@@ -54,4 +56,83 @@ task printVersion(group: 'versioning', description: 'Prints Version of the proje
 }
 def doMiddle(version) {
     println "doMiddle of printVersion $version"
+}
+
+// loading the version from the class file
+version = new ProjectVersion(0,2,true) // This refers to the version in the Project API of gradle project.
+
+class ProjectVersion{
+    Integer minor
+    Integer major
+    Boolean releaseFlag
+
+    ProjectVersion(Integer minor, Integer major, Boolean releaseFlag) {
+        this.minor = minor
+        this.major = major
+        this.releaseFlag = releaseFlag
+    }
+
+    ProjectVersion(Integer minor, Integer major) {
+        this.minor = minor
+        this.major = major
+    }
+
+    @Override
+    String toString() {
+        return "$major.$minor${releaseFlag ? '' : '-SNAPSHOT'}"
+    }
+}
+
+// Dynamically loading the version from the properties file.
+ext.versionFile = file('version.properties')
+task loadVersion {
+   // project.version=readVersion() // This is a configuration. So this gets executed even though the task is not specifically invoked.
+    println "Version is $project.version"
+
+}
+
+ProjectVersion readVersion() {
+
+    logger.quiet('Inside readVersion')
+    
+    Properties versionProps = new Properties()
+    versionFile.withInputStream {
+        stream -> versionProps.load(stream)
+    }
+
+    new ProjectVersion(versionProps.major.toInteger(), versionProps.minor.toInteger()
+                 ,versionProps.release.toBoolean())
+}
+
+// task input/outputs
+task releaseVersion {
+    inputs.property('releaseFlag', version.releaseFlag)
+    outputs.file versionFile
+    doLast {
+        version.releaseFlag = true
+        ant.propertyfile(file: versionFile) {
+            entry(key: 'releaseFlag', type: 'string', operation: '=', value: 'false')
+        }
+    }
+}
+
+// Creating a custom task
+
+class ReleaseVersionTask extends DefaultTask {
+
+    @Input Boolean releaseFlag
+    @OutputFile File destFile
+
+    @TaskAction
+    void start(){
+        project.version.releaseFlag = true
+        ant.propertyfile(file: destFile) {
+            entry(key: 'releaseFlag', type: 'string', operation: '=', value: 'false')
+        }
+    }
+}
+
+task releaseVersion1(type: ReleaseVersionTask) {
+    releaseFlag = version.releaseFlag
+    destFile = versionFile
 }
