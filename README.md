@@ -453,9 +453,12 @@ class ReleaseVersionTask extends DefaultTask {
     }
 }
 
+// This is how we pass the input to the ReleaseVersionTask that's created.
 task releaseVersion1(type: ReleaseVersionTask) {
     releaseFlag = version.releaseFlag
     destFile = versionFile
 }
 
 ```
+
+#### Gradle’s built-in task types

@@ -132,6 +132,7 @@ class ReleaseVersionTask extends DefaultTask {
     }
 }
 
+// This is how we pass the input to the ReleaseVersionTask thats created.
 task releaseVersion1(type: ReleaseVersionTask) {
     releaseFlag = version.releaseFlag
     destFile = versionFile
