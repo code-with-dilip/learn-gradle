@@ -86,7 +86,7 @@ class ProjectVersion{
 // Dynamically loading the version from the properties file.
 ext.versionFile = file('version.properties')
 task loadVersion {
-   // project.version=readVersion() // This is a configuration. So this gets executed even though the task is not specifically invoked.
+    project.version=readVersion() // This is a configuration. So this gets executed even though the task is not specifically invoked.
     println "Version is $project.version"
 
 }
@@ -136,4 +136,18 @@ class ReleaseVersionTask extends DefaultTask {
 task releaseVersion1(type: ReleaseVersionTask) {
     releaseFlag = version.releaseFlag
     destFile = versionFile
+}
+
+task createDistribution(type: Zip, dependsOn: releaseVersion){
+
+    from jar.outputs.files // implicit reference to output of jar task
+
+    from (sourceSets*.allSource){ //take all the source files and put them in to zip file
+        into 'src'
+    }
+
+    from(rootDir){
+        include versionFile.name // add the version name to zip file.
+    }
+
 }

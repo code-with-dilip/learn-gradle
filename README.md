@@ -462,3 +462,54 @@ task releaseVersion1(type: ReleaseVersionTask) {
 ```
 
 #### Gradle’s built-in task types
+
+## 5. Dependency management
+
+-  You define what libraries your build depends on with the dependencies script.
+- Second, you tell your build the origin of these dependencies using the repositories closure.
+- Dependency management sounds like an easy nut to crack, but can become difficult when it comes to dependency resolution conflicts.         
+- Transitive dependencies, the dependencies a declared dependency relies on, can be a blessing and a curse.
+
+**Imperfect dependency management techniques**
+- Manually copying JAR files to the developer machine
+- Using a shared storage for JAR files
+- Checking JAR files that get downloaded with the project source code into the VCS.
+
+**Importance of automated dependency management**
+- Knowing the exact version of a dependency.
+- Transitive dependencies are of concern even at an early stage of development.These are the libraries your first-level dependencies require in order to work correctly.
+
+**Using automated dependency management**
+- The dependency identifiers plus their respective versions, and
+- The location of the binary repositories (for example, an HTTP address you want to retrieve them from).
+- Using the above information the dependency manager will retrieve the dependencies and store them in their local cache.
+- Using a dependency manager frees you from the burden of manually having to copy or organize JAR files.
+- Gradle provides a powerful out-of-the-box dependency management implementation.
+
+### LEARNING DEPENDENCY MANAGEMENT BY EXAMPLE
+- Dependency management is done by using the two configuration blocks.
+  - repositories
+  - depedencies
+- The names of the configuration blocks directly map to methods of the interface Project.  
+
+### DEPENDENCY CONFIGURATIONS
+- Plugins can introduce configurations to define the scope for a dependency.
+  - **Java plugin** brings in a variety of standard configurations to define which bucket of the Java build lifecycle a dependency should apply to. For example, dependencies required for compiling production source code are added with the compile configuration.
+
+#### Understanding the configuration API representation
+- Configurations can be directly added and accessed at the root level of a project.
+- Every project owns a container of class ConfigurationContainer that manages the corresponding configurations.  
+- For Example, the **java** plugin comes up with these configurations out of the box.
+  ```
+  runtime, testCompile, testRuntime, archives, and default
+  ```
+- You can add your own configurations using the below closure.
+
+```
+configurations {
+
+}
+```  
+-  Check the section **5.3** in the book.
+
+### DECLARING DEPENDENCIES
