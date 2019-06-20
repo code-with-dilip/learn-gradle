@@ -465,7 +465,8 @@ task releaseVersion1(type: ReleaseVersionTask) {
 
 ## 5. Dependency management
 
--  You define what libraries your build depends on with the dependencies script.
+- Gradle’s DSL configuration closures make it easy to declare **dependencies** and the **repositories** to retrieve them from.
+- You define what libraries your build depends on with the dependencies script.
 - Second, you tell your build the origin of these dependencies using the repositories closure.
 - Dependency management sounds like an easy nut to crack, but can become difficult when it comes to dependency resolution conflicts.         
 - Transitive dependencies, the dependencies a declared dependency relies on, can be a blessing and a curse.
@@ -513,3 +514,32 @@ configurations {
 -  Check the section **5.3** in the book.
 
 ### DECLARING DEPENDENCIES
+
+- Every Gradle project has an instance of a dependency handler.
+- You obtain the reference of the **DependencyHandler** using the dependencies configuration block.
+-  Each dependency is an instance of type Dependency. The attributes group, name, version, and classifier clearly identify a dependency.
+
+#### Excluding Transitive Dependencies
+
+- Syntax to exclude the transitive dependencies.
+  - **exclusion** attributes are slightly different from the regular dependency notation.
+  - You can use the attributes group and/or module. Gradle doesn’t allow you to exclude only a specific version of a dependency, so the version attribute isn’t available.                  
+```
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+    testCompile(group: 'junit', name: 'junit', version: '4.12') {
+        exclude (group: 'org.hamcrest', module :'hamcrest-core')
+    }
+}
+```
+- Excluding all the transitive dependencies.
+
+```
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+    testCompile(group: 'junit', name: 'junit', version: '4.12') {
+        //exclude (group: 'org.hamcrest', module :'hamcrest-core')
+        transitive = false
+    }
+}
+```
