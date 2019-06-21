@@ -176,7 +176,14 @@ jar {
 ```
 
 ## 4. Build script essentials
-
+### Nutshell
+  - A build script has
+    - Project - apply, buildScript,dependencies, configurations, tasks, file, files, name , version and more.
+    - Task  - dependsOn, inputs, outputs, ant, description, finalizedBy.
+  - Phases of build
+    - Intialization
+    - Configuration
+    - Execution
 - Every Gradle build consists of three basic building blocks: projects, tasks, and properties.
 - Each build contains at least one project, which in turn contains one or more tasks.
   - Project and Tasks have a direct class representation in Gradle’s API
@@ -464,7 +471,21 @@ task releaseVersion1(type: ReleaseVersionTask) {
 #### Gradle’s built-in task types
 
 ## 5. Dependency management
+### Nutshell
+- Grade DSL Configuration Closures makes it easy to retrieve the dependencies.
+  - dependencies closure.
+  - repositories closure.
+- Project API
+    - Has one Congifuration Container
+      - The Configuration Container can have n number of Configurations.
+- The Configuration for a Java plugin is - compile, runtime, testCompile, testRuntime, archives, and default.
+- dependecies is represnted to DependecyHandler
+  - Each dependency is of type Dependency. The attributes group, name, version clearly identify a dependency.
+  - Shortcut to declare a dependency is "groupname:modulename:version"  
+  - You have the option to exclude the transitive dependency using a simple syntax.
 
+
+#### Introduction
 - Gradle’s DSL configuration closures make it easy to declare **dependencies** and the **repositories** to retrieve them from.
 - You define what libraries your build depends on with the dependencies script.
 - Second, you tell your build the origin of these dependencies using the repositories closure.
@@ -502,7 +523,7 @@ task releaseVersion1(type: ReleaseVersionTask) {
 - Every project owns a container of class ConfigurationContainer that manages the corresponding configurations.  
 - For Example, the **java** plugin comes up with these configurations out of the box.
   ```
-  runtime, testCompile, testRuntime, archives, and default
+  compile, runtime, testCompile, testRuntime, archives, and default
   ```
 - You can add your own configurations using the below closure.
 
@@ -543,3 +564,34 @@ dependencies {
     }
 }
 ```
+
+### USING AND CONFIGURING REPOSITORIES
+
+- Central to defining repositories in your project is the interface **RepositoryHandler**.
+- From the project, these methods are invoked within your repositories configuration block.
+
+repositories {
+    mavenCentral() // -> http://repo1.maven.org/maven2
+    jcenter()
+    maven {
+      name 'Custom Maven Repsitory'
+      url 'http://repository-gradle-in-action.forge.cloudbees.com/release/'
+    }
+}
+
+### UNDERSTANDING THE LOCAL DEPENDENCY CACHE
+
+-  Dependencies are downloaded and cached in this path **/Users/<USER_ID>/.gradle/caches/**.
+
+#### Notable caching features
+- The real power of Gradle’s cache lies in its metadata.
+  - Storing the origin of a dependency
+  - Artifact change detection
+  - Reduced artifact downloads and improved change detection
+    - Gradle detects if an artifact was changed in the repository by comparing its local and remote checksum. Unchanged artifacts are not downloaded again and reused from the local cache.
+    - Offline mode
+      -  Suppose lets say you are traveling and don't have the internet connection then run the build using the offline will avoid chekcing the remote repositories.
+
+### TROUBLESHOOTING DEPENDENCY PROBLEMS      
+- Gradle’s default strategy to resolve those conflicts is to pick the newest version of a dependency.
+-

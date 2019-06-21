@@ -30,7 +30,8 @@ version '1.0'
 sourceCompatibility = 11
 
 repositories {
-    mavenCentral()
+    mavenCentral() // -> http://repo1.maven.org/maven2
+    jcenter()
 }
 
 jar {
@@ -153,4 +154,13 @@ task createDistribution(type: Zip, dependsOn: releaseVersion){
         include versionFile.name // add the version name to zip file.
     }
 
+}
+
+// Defining a new Configuration
+
+configurations {
+    cargo{
+        description = 'classpath for Cargo Ant Tasks'
+        visible = false
+    }
 }
