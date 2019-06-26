@@ -164,3 +164,60 @@ configurations {
         visible = false
     }
 }
+
+// Defining the multiproject
+
+/*project(':model') {
+    group = 'com.learngradle'
+    version= '1.0'
+    apply plugin: 'java'
+}
+
+project(':repository') {
+    group = 'com.learngradle'
+    version= '1.0'
+    apply plugin: 'java'
+    dependencies {
+        implementation project(":model") // dependency of another subproject
+    }
+}*/
+
+// multiproject ends
+
+// Defining cross project task
+
+task hello {
+    doLast(){
+        println 'hello from root project'
+    }
+}
+
+
+project(':repository') {
+    task hello {
+        doLast(){
+            println 'hello from repository project'
+        }
+    }
+}
+
+// multiproject with allprojects and subprojects starts
+
+allprojects{
+    group = 'com.learngradle'
+    version= '1.1'
+}
+
+subprojects{
+    apply plugin: 'java'
+}
+
+project(':repository') {
+    dependencies {
+        implementation project(":model") // dependency of another subproject
+    }
+}
+
+project(':model') {
+}
+// multiproject with allprojects and subprojects ends

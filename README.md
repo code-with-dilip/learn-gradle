@@ -541,7 +541,7 @@ configurations {
 -  Each dependency is an instance of type Dependency. The attributes group, name, version, and classifier clearly identify a dependency.
 
 #### Excluding Transitive Dependencies
-
++
 - Syntax to exclude the transitive dependencies.
   - **exclusion** attributes are slightly different from the regular dependency notation.
   - You can use the attributes group and/or module. Gradle doesn’t allow you to exclude only a specific version of a dependency, so the version attribute isn’t available.                  
@@ -594,4 +594,142 @@ repositories {
 
 ### TROUBLESHOOTING DEPENDENCY PROBLEMS      
 - Gradle’s default strategy to resolve those conflicts is to pick the newest version of a dependency.
--
+
+## 6. MultiProject Builds
+- Gradle provides powerful support for building modularized projects. We call them **multiproject** builds.
+- Any software thats built should have the following **Less Coupling and High Cohesion**.
+- Run this below task to find out your project structure.
+
+```
+gradle projects
+```
+### Settings File
+
+- The settings file declares the configuration required to instantiate the project’s hierarchy.
+- Settings file is the one which determines that the project is a **multi-project** build or a **single** project build.
+
+#### Settings API
+- Before Gradle assembles the build, it creates an instance of type **Settings**.
+- The interface Settings is a direct representation of settings file.
+- Settings execution happens at the intialization phase.
+
+#### Settings File Resolution
+- It searches for the settings file in the root path and if it did not find one then it follows the flow given in **Fig 6.6**.
+- You have the option to provide the settings file location in the command itself.
+
+```
+-u, --no-search-upward
+-c, --settings-file
+```
+
+### Configuring Sub-Project
+
+- The root project and all subprojects should use the same group and version property value.
+- All subprojects are Java projects and require the Java plugin to function correctly, so you’ll only need to apply the plugin to subprojects, not the root project.
+
+#### Understanding ProjectAPI representation
+- The project api has project, allprojects, subprojects methods.
+  - **project** -> Use this if you want project specific implementation.
+  - **allproject** -> Use this if you want a common behavior across all projects.
+  - **subproject** -> Use this if you want a particular behavior to be available to the subprojects.
+- The default evaluation order of projects in a multiproject build is based on their alphanumeric name.
+
+### SubProject Dependencies
+- The below config takes care of defining the properties for the subprojects.
+
+```
+project(':model') {
+    group = 'com.learngradle'
+    version= '1.0'
+    apply plugin: 'java'
+}
+
+project(':repository') {
+    group = 'com.learngradle'
+    version= '1.0'
+    apply plugin: 'java'
+    dependencies {
+        implementation project(":model") // dependency of another subproject
+    }
+}
+```  
+
+#### Partial multiproject builds
+- These are really helpful when you dont have to build the whole project. Just build the subproject that you modified.
+
+- The below command just builds the project **repository** nothing else. Even though the repository is dependent upon model it wont build that project with the option **-a**.
+```
+gradle :repository:build -a
+```
+-  The below command builds the dependent projects and at the same time it runs the test cases of the dependent projects.
+
+```
+gradle :repository:buildNeeded
+```
+- This builds the projects that depends on the project **model**.
+
+```
+gradle :model:buildDependents
+```
+
+#### Declaring cross-project task dependencies
+
+- Lets say you have a task **hello** like below which is present in root project and sub project. Gradle does not have any clue which order it needs to execute the hello task.
+
+```
+task hello{
+    doLast(){
+        println 'hello from root project'
+    }
+}
+
+project(':model') {
+    task hello{
+        doLast(){
+            println 'hello from model project'
+        }
+    }
+}
+
+project(':repository') {
+    task hello{
+        doLast(){
+            println 'hello from repository project'
+        }
+    }
+}
+```
+
+**Controlling Task execution order**
+
+- You can inject the dependency like below. So that the hello task in  **repository** project gets executed before the model.
+
+```
+task hello{
+    doLast(){
+        println 'hello from root project'
+    }
+}
+
+project(':model') {
+    task hello (dependsOn: ':repository:hello'){
+        doLast(){
+            println 'hello from model project'
+        }
+    }
+}
+
+project(':repository') {
+    task hello{
+        doLast(){
+            println 'hello from repository project'
+        }
+    }
+}
+```
+
+#### Defining common behavior
+- Some of the common behaviors are **groupid** and **version**.
+- If you have a common behavior like above then it will be applied to all of the subprojects then we can make use of the below configurations.
+  - allprojects
+  - subprojects
