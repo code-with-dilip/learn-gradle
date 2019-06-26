@@ -1,0 +1,11 @@
+
+
+plugins {
+    id 'java-library'
+}
+
+
+dependencies {
+    api 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation project(":model") // dependency of another subproject
+}

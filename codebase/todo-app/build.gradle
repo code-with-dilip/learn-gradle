@@ -205,19 +205,24 @@ project(':repository') {
 
 allprojects{
     group = 'com.learngradle'
-    version= '1.1'
+    version= '1.2'
 }
 
 subprojects{
     apply plugin: 'java'
+    repositories {
+        mavenCentral() // -> http://repo1.maven.org/maven2
+        jcenter()
+    }
+
 }
 
-project(':repository') {
+/*project(':repository') {
     dependencies {
         implementation project(":model") // dependency of another subproject
     }
 }
 
 project(':model') {
-}
+}*/
 // multiproject with allprojects and subprojects ends

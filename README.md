@@ -733,3 +733,20 @@ project(':repository') {
 - If you have a common behavior like above then it will be applied to all of the subprojects then we can make use of the below configurations.
   - allprojects
   - subprojects
+
+### Rename the defaule build.gradle file
+
+- This can be done by making changes in the **settings.gradle** file.
+- The below configuration changes the default value of the subprojects build.gradle to the projectname.gradle file.
+  - Basically the values of the gradle file are :
+    - **repository.gradle**
+    - **model.gradle**
+```
+rootProject.name = 'todo-app'
+include 'model', 'repository'
+
+rootProject.children.each {
+    //println 'inside forarch of settings.gradle '+"$it.buildFileName" +"$it.name"
+    it.buildFileName = it.name +'.gradle'
+}
+```
