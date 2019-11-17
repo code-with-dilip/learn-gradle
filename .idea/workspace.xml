@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6c2ee0c9-43c1-47af-aa08-87ec86a40b3c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/5.4.1/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/5.4.1/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build-old.gradle" afterDir="false" />
-    </list>
+    <list default="true" id="6c2ee0c9-43c1-47af-aa08-87ec86a40b3c" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/explore-groovy/.gradle/" />
@@ -40,6 +31,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="bat" value="1" />
+          <entry key="gitignore" value="2" />
           <entry key="gradle" value="4" />
           <entry key="gradlew" value="1" />
           <entry key="groovy" value="5" />
@@ -54,7 +46,7 @@
           <entry key="Groovy" value="9" />
           <entry key="JAVA" value="4" />
           <entry key="Markdown" value="4" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="3" />
           <entry key="Properties" value="1" />
         </counts>
       </usages-collector>
@@ -119,11 +111,29 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/explore-groovy/src/main/groovy/com/learngradle/collections/CollectionsExample.groovy">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="240">
                   <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/explore-groovy/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="398">
+                  <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/codebase/todo-app/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="180">
+                  <caret line="12" column="8" selection-end-line="30" />
                 </state>
               </provider>
             </entry>
@@ -835,6 +845,7 @@
         <option value="$PROJECT_DIR$/explore-groovy/src/main/groovy/com/learngradle/domain/Person.groovy" />
         <option value="$PROJECT_DIR$/explore-groovy/README.md" />
         <option value="$PROJECT_DIR$/explore-groovy/src/main/groovy/com/learngradle/collections/CollectionsExample.groovy" />
+        <option value="$PROJECT_DIR$/explore-groovy/.gitignore" />
       </list>
     </option>
   </component>
@@ -865,6 +876,17 @@
             <path>
               <item name="learn-gradle" type="b2602c69:ProjectViewProjectNode" />
               <item name="learn-gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn-gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn-gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="codebase" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn-gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn-gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="codebase" type="462c0819:PsiDirectoryNode" />
+              <item name="todo-app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="learn-gradle" type="b2602c69:ProjectViewProjectNode" />
@@ -956,7 +978,7 @@
     <property name="SearchEverywhereHistoryKey" value="CanonicalASTTransformation&#9;PSI&#9;JAVA://org.codehaus.groovy.transform.CanonicalASTTransformation" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574008962476" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574008969698" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -1081,17 +1103,18 @@
       <option name="presentableId" value="Default" />
       <updated>1573911697283</updated>
       <workItem from="1573911699047" duration="1540000" />
-      <workItem from="1573913390120" duration="8300000" />
+      <workItem from="1573913390120" duration="8392000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9840000" />
+    <option name="totallyTimeSpent" value="9932000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25274727" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25274727" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1108,7 +1131,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.5346939" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.5346939" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.31428573" />
@@ -1286,6 +1309,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codebase/todo-app/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="8" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/explore-groovy/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
