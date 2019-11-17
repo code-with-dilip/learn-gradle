@@ -1,0 +1,17 @@
+ext.firstName = 'Dilip'
+
+task helloWorld {
+    doLast {
+        println "Hello $firstName!"
+    }
+}
+
+task hi(dependsOn: helloWorld){
+    doLast {
+        println "hi $firstName,from  doLast!"
+    }
+}
+
+hi.doFirst{
+    println "Hi $firstName,  from doFirst!"
+}
