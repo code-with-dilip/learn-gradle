@@ -88,3 +88,12 @@ sourceCompatibility = 1.8
 ```
 gradle properties
 ```
+## Directed Acyclic Graph and Source Sets
+
+- In general there are two different source sets available for a Java Plugin
+  - main
+    - Contains the production source code of the project, which is compiled and assembled into a JAR.
+  - test
+    - Contains your test source code, which is compiled and executed using JUnit
+
+Check the following link - https://docs.gradle.org/current/userguide/java_plugin.html#source_sets
