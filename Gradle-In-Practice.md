@@ -90,6 +90,7 @@ gradle properties
 ```
 ## Directed Acyclic Graph and Source Sets
 
+### Source Set
 - In general there are two different source sets available for a Java Plugin
   - main
     - Contains the production source code of the project, which is compiled and assembled into a JAR.
@@ -97,3 +98,28 @@ gradle properties
     - Contains your test source code, which is compiled and executed using JUnit
 
 Check the following link - https://docs.gradle.org/current/userguide/java_plugin.html#source_sets
+
+
+#### build.gradle
+
+- Changing the **sourceSet** directory
+
+```
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java1', 'src/main/java']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java1', 'src/test/java']
+        }
+    }
+}
+```
+
+#### build.gradle.kts
