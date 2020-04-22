@@ -163,3 +163,36 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
+
+### Adding Custom Configurations
+
+- The below piece of code add a custom configuration to the project
+
+```
+configurations {
+    newConfiguration
+}
+```
+
+- Using the custom configuration to pull the dependencies
+
+```
+dependencies {
+    newConfiguration'org.apache.httpcomponents:httpclient:4.5.5'
+}    
+```
+
+### Referencing dependencies in a specific path in your local
+
+- The very first thing that needs to be done is to add the local machine directory in the **repositories** which is part of the Project Groovy API using the **flatDir**
+
+```
+flatDir {
+        dirs '/Users/z001qgd/Dilip/study/codewithdilip/learn-gradle/explore-gradle-kotlindsl/build/libs'
+    }
+```
+- The next step is to add the dependency configuration in the **dependencies** section.
+
+```
+implementation ("com.learngradle:explore-gradle-kotlindsl-1.0-SNAPSHOT:1.0-SNAPSHOT")
+```
