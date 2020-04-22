@@ -7,14 +7,53 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 
-sourceSets {
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java1', 'src/main/java']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java1', 'src/test/java']
+        }
+    }
 }
+
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs '/Users/z001qgd/Dilip/study/codewithdilip/learn-gradle/explore-gradle-kotlindsl/build/libs'
+    }
+
+}
+
+configurations {
+    newConfiguration
+}
+tasks.register("listJars") {
+    doLast {
+        println("Inside List Jars")
+        configurations.newConfiguration.each {
+            File file -> println(file.name)
+        }
+    }
+}
+
+task abc {
+    println("Inside task abc")
+   /* configurations.forEach({
+        println("Configuration name $it")
+    })*/
 }
 
 dependencies {
+    newConfiguration'org.apache.httpcomponents:httpclient:4.5.5'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation ("com.learngradle:explore-gradle-kotlindsl-1.0-SNAPSHOT:1.0-SNAPSHOT")
 }
