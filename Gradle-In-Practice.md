@@ -124,6 +124,8 @@ sourceSets {
 
 #### build.gradle.kts
 
+- Changing the **sourceSet** directory
+
 ```
 sourceSets {
     main {
@@ -134,5 +136,30 @@ sourceSets {
             setSrcDirs(listOf("src/resources"))
         }
     }
+}
+```
+
+## Dependency Management
+
+- Gradle has built in support for dependency management
+
+- Dependencies are normally retrieved from repositories.
+
+```
+repositories {
+    mavenCentral()
+}
+```
+
+### Declaring Dependencies
+
+- **Gradle** represents the scope of a dependency with the help of a Configuration. Every configuration can be identified by a unique name.
+
+- In the below example implementation and testcompile are the confifurations.
+
+```
+dependencies {
+    implementation 'org.apache.httpcomponents:httpclient:4.5.5'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 ```
