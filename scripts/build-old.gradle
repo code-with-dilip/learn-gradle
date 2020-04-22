@@ -1,0 +1,54 @@
+task helloWorld {
+   doLast {
+      println 'Hello world!'
+   }
+}
+
+task startSession{
+  chant()
+}
+
+def chant(){
+  println ' Repeat After me'
+}
+
+3.times {
+  task "yayGradle$it"{
+    //println  $it
+    doLast {
+    println ' Gradle Rocks'
+    }
+  }
+}
+
+yayGradle0.dependsOn startSession
+yayGradle2.dependsOn yayGradle1, yayGradle0
+task groupTherapy(dependsOn: yayGradle2)
+
+task first {
+  doLast {
+  println 'first'
+  }
+}
+
+task second {
+  doLast {
+  println 'second'
+  }
+}
+
+first.finalizedBy second
+
+task third(dependsOn: [first,second]){
+  doLast {
+  println 'third'
+  }
+}
+
+task four {
+  doLast {
+  println 'four'
+  }
+}
+
+four.dependsOn third
