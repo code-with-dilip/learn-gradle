@@ -1,5 +1,6 @@
 plugins {
     id ("org.jetbrains.kotlin.jvm") version "1.3.71"
+    groovy
 }
 
 group =  "com.learngradle"
@@ -13,6 +14,16 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("src/main/java","src/main/java1", "src/main/kotlin", "src/main/kotlin1"))
+        }
+        resources {
+            setSrcDirs(listOf("src/resources"))
+        }
+    }
+}
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.apply {

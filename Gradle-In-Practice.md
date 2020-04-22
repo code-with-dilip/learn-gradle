@@ -123,3 +123,16 @@ sourceSets {
 ```
 
 #### build.gradle.kts
+
+```
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("src/main/java","src/main/java1", "src/main/kotlin", "src/main/kotlin1"))
+        }
+        resources {
+            setSrcDirs(listOf("src/resources"))
+        }
+    }
+}
+```
