@@ -7,6 +7,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 
+ext {
+    developerName = 'Dilip'
+}
+
 
 sourceSets {
     main {
@@ -45,11 +49,38 @@ tasks.register("listJars") {
     }
 }
 
-task abc {
-    println("Inside task abc")
-   /* configurations.forEach({
-        println("Configuration name $it")
-    })*/
+
+
+task copyJars(type : Copy){
+    from configurations.testRuntime
+    into "$buildDir/jars"
+}
+
+
+task copyFiles(type: Copy) {
+    from "$rootDir/input/cache.txt"
+    into "$rootDir/output/"
+}
+
+
+task abc() {
+    doLast{
+        println("Inside task abc: $developerName" )
+    }
+}
+
+compileTestJava {
+    dependsOn 'abc'
+}
+
+task abc1() {
+    doLast{
+        println("Hello abc1")
+    }
+}
+
+abc1 {
+    dependsOn 'compileJava'
 }
 
 dependencies {
@@ -57,3 +88,5 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation ("com.learngradle:explore-gradle-kotlindsl-1.0-SNAPSHOT:1.0-SNAPSHOT")
 }
+//project.tasks.getByName('build').dependsOn 'abc'
+abc1.onlyIf {!project.hasProperty("skipabc1")}
