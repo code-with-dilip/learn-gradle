@@ -265,7 +265,17 @@ build -m
 gradle --profile build
 ```
 
+- Different properties that are available for the build file in **gradle**
+
+```
+gradle properties
+```
+
 - Parallel execution of the project
+
+```
+gradle --parallel clean build
+```
 
 ## Plugin
 
@@ -280,18 +290,18 @@ gradle --profile build
 
 - The Java plugin adds Java compilation along with testing and bundling capabilities to a project
 
-#### Apply Plugin
+### How to Apply Plugin
+
 ```aidl
-apply plugin: 'java'
+plugin {
+  java
+}
 ```  
 
--   **apply** is a method call in the class and assigns the property **plugin** as **java**
-    -   The **plugin** is a map so the above call puts the java to the **plugin** map.
+- The legacy way of applying plugin is not recommended anymore
 
--   The below line sets the java source code compatibility to Java 8.
-
-```aidl
-sourceCompatibility = 1.8
+```
+apply plugin: java
 ```
 
 -  Different phases of a Java Plugin
@@ -314,6 +324,48 @@ sourceCompatibility = 1.8
 
 - Different Property values of a gradle file. Run the below command which will list all the properties that are applicable for a gradle file.
 
+### How to apply the community plugin
+
+- Applying a community plugin using the plugin DSL.
+  -  You should always pass the version in addition to the **id** for the community plugin.
+
 ```
-gradle properties
+plugins {
+    id 'java'
+    id 'com.jfrog.bintray' version '0.4.1'
+}
+```
+
+### Using buildScript {} block [LEGACY]
+
+- The buildScript is basically used to download the plugins and makes it available as like its available in the local path.
+
+ This is the **legacy way** of applying the plugin.
+
+- The below code snippet should be present before the plugins block.
+
+```
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.4.1'
+    }
+}
+```
+
+### Application Plugin
+
+- The application plugin is mainly used to create executables with a main class in it.
+- The application plugin exposes a **mainClassName** through we provide the start up class.
+
+```
+plugins {
+  id 'application'
+}
+
+mainClassName = 'com.learngradle.ExploreApplicationPlugin'
+
+
 ```

@@ -1,6 +1,21 @@
+/*
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.4.1'
+    }
+}
+*/
+
 plugins {
     id 'java'
+    id 'application'
+    id 'com.jfrog.bintray' version '0.4.1'
 }
+
+//apply plugin: 'com.jfrog.bintray'
 
 group 'com.learngradle'
 version '1.0-SNAPSHOT'
@@ -11,6 +26,7 @@ ext {
     developerName = 'Dilip'
 }
 
+mainClassName = 'com.learngradle.ExploreApplicationPlugin'
 
 sourceSets {
     main {
