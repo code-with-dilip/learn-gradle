@@ -28,7 +28,7 @@ class GreetingPluginSpec extends Specification{
                 .withProjectDir(testProjectDir.root)
                 .withPluginClasspath()
                 .withDebug(true)
-                .withArguments(Collections.singletonList("myTask"))
+                .withArguments(List.of("myTask", "hello"))
 
         when:
         def result = gradleRunner.build()
@@ -41,6 +41,8 @@ class GreetingPluginSpec extends Specification{
         })
         println("out put is ${result.output}")
         result.task(":myTask").outcome == TaskOutcome.SUCCESS
+        result.task(":hello").outcome == TaskOutcome.SUCCESS
+
 
     }
 }
