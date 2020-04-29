@@ -14,7 +14,7 @@ class GreetingPluginSpec extends Specification{
         buildFile = testProjectDir.newFile('build.gradle')
         buildFile << """
             plugins {
-                id 'com.firstplugin.greetingPlugin'
+                id 'com.firstplugin.greeting'
             }
         """
 

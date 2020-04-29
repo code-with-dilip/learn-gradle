@@ -4,9 +4,9 @@ val spockGroovyVersion: String by project
 
 
 plugins {
-    groovy
-    kotlin("jvm") version "1.3.72"
-    id("java-gradle-plugin")
+        groovy
+        kotlin("jvm") version "1.3.72"
+        id("java-gradle-plugin")
 }
 
 group = "com.learnplugin"
@@ -44,8 +44,3 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
     }
 }
-
-//val compileTestKotlin: KotlinCompile by tasks
-//compileTestKotlin.kotlinOptions {
-//    jvmTarget = "11"
-//}
