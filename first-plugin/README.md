@@ -29,4 +29,33 @@ dependencies {
     implementation-class=com.learnplugin.greeting.GreetingPlugin
     ```    
     -   This is the class where the plugin code is actually written.
+
+## How do we test this plugin in another project(Before publishing it to Gradle)
+
+-   First step is to provide the reference to the path where the plugin is located in your machine
+    -   In the repositories, provide the **flatDir{}** to point to the folder in your local. 
+    -   In the **dependencies** section, provide the **jar** file dependency.
     
+- Example code below:
+        
+```aidl
+buildscript{
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs ("/Users/z001qgd/Dilip/study/codewithdilip/learn-gradle/first-plugin/build/libs")
+        }
+    }
+    dependencies {
+        classpath("com.learnplugin:first-plugin-1.0-SNAPSHOT:1.0-SNAPSHOT")
+    }
+}
+
+```
+
+-   The next step is to apply the plugin:
+```aidl
+apply(plugin = "com.firstplugin.greeting")
+```    
+
+-   After this all the tasks will be visible in the new project where the above code is included.

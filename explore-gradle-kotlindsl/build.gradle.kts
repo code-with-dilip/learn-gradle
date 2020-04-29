@@ -1,3 +1,18 @@
+
+buildscript{
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs ("/Users/z001qgd/Dilip/study/codewithdilip/learn-gradle/first-plugin/build/libs")
+        }
+    }
+    dependencies {
+        classpath("com.learnplugin:first-plugin-1.0-SNAPSHOT:1.0-SNAPSHOT")
+    }
+}
+
+apply(plugin = "com.firstplugin.greeting")
+
 plugins {
     id ("org.jetbrains.kotlin.jvm") version "1.3.71"
     groovy
