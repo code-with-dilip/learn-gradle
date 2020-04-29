@@ -7,6 +7,7 @@ plugins {
         groovy
         kotlin("jvm") version "1.3.72"
         id("java-gradle-plugin")
+        `maven-publish`
 }
 
 group = "com.learnplugin"
@@ -18,6 +19,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.apache.httpcomponents:httpclient:4.5.5")
     implementation(gradleApi())
     testImplementation(gradleTestKit())
     testImplementation("junit:junit:4+")
@@ -36,7 +38,24 @@ sourceSets {
         }
     }
 }
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.learnplugin"
+            artifactId = "first-plugin"
+            version = "1.0-SNAPSHOT"
 
+            from(components["kotlin"])
+        }
+    }
+    repositories {
+        maven {
+            name = "myRepo"
+            url = uri("file://${buildDir}/repo")
+        }
+    }
+
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
